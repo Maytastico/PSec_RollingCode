@@ -55,4 +55,22 @@ void decryptAES(unsigned char* input, unsigned char* output);
  */
 void createEncryptedRadioPayload(uint32_t counter, unsigned char* output);
 
+/**
+ * @brief Decrypts an incoming 16-byte radio cipher block and parses it back into a RadioPayload structure.
+ * 
+ * This function handles the reverse processing pipeline for incoming data packets. It acts as a 
+ * decryption engine and structural parser combined. It channels the raw encrypted 16-byte buffer 
+ * through the AES-128 decryption routine, populates an internal plaintext mirror, and extracts 
+ * the data safely into the provided output structure. It also outputs detailed hex logs to visually 
+ * demonstrate the successful shift from ciphertext back to verifiable data.
+ * 
+ * @note This function processes exactly one 16-byte cryptographic block.
+ * @warning The destination pointer `output` must point to a valid, pre-allocated memory layout.
+ * 
+ * @param input   Pointer to the incoming 16-byte ciphertext buffer received over the air.
+ * @param output  Pointer to the destination `RadioPayload` structure where the parsed, decrypted 
+ *                serial number and counter will be stored.
+ */
+void decryptEncryptedRadioPayload(unsigned char* input, RadioPayload* output);
+
 #endif // CRYPTO_HELPER_HPP

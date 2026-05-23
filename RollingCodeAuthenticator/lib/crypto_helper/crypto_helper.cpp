@@ -1,5 +1,5 @@
 #include <Arduino.h>
-#include "config_params.hpp"
+#include <config_params.hpp>
 #include "crypto_helper.hpp"
 #include <mbedtls/aes.h>
 #include <string.h>
@@ -57,4 +57,27 @@ void createEncryptedRadioPayload(uint32_t counterToEncrypt, unsigned char* outpu
         output[4], output[5], output[6], output[7],
         output[8], output[9], output[10], output[11],
         output[12], output[13], output[14], output[15]);
+}
+
+void decryptEncryptedRadioPayload(unsigned char* input, RadioPayload* output) {
+  // Puffer für die entschlüsselten Klartext-Bytes anlegen (16 Bytes)
+  unsigned char deciphered[sizeof(RadioPayload)];
+  
+  // 1. Datenblock entschlüsseln
+  decryptAES((unsigned char*)input, deciphered);
+  
+  // 2. Speicher-Inhalt sicher in die Ziel-Struktur kopieren
+  memcpy(output, deciphered, sizeof(RadioPayload));
+
+  // 3. LOGGING (Didaktisch perfekt für den Workshop):
+  log_d("--- Processing Incoming Telegram ---");
+  log_d("RX Ciphertext (16 Bytes): "String
+        "%02X%02X%02X%02X %02X%02X%02X%02X %02X%02X%02X%02X %02X%02X%02X%02X",
+        input[0], input[1], input[2], input[3],
+        input[4], input[5], input[6], input[7],
+        input[8], input[9], input[10], input[11],
+        input[12], input[13], input[14], input[15]);
+
+  // Zeigt den Schülern das erfolgreiche Ergebnis der Krypto-Operation
+  log_i("Decrypted Telegram -> Serial: [12 Bytes], Decrypted Counter: %u", output->counter);
 }
