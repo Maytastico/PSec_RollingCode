@@ -1,6 +1,18 @@
 #include <string.h>
 
+#define CC_CS   10
+#define CC_GDO0  4
+#define CC_RST  RADIOLIB_NC  // RESET-Pin wird beim CC1101 meist nicht genutzt
+#define CC_GDO2  3           // Optional
+
+#define SPI_SCK  12
+#define SPI_MISO 13
+#define SPI_MOSI 11
+
 const uint16_t SERIAL_NUMBER_SIZE = 12;
+
+const uint8_t BTN_PIN_OPEN = 37;
+const uint8_t BTN_PIN_CLOSE = 38;
 
 // Eindeutige Seriennummer für deinen KeyFob (12 Bytes)
 const unsigned char SERIAL_NUMBER[SERIAL_NUMBER_SIZE] = {

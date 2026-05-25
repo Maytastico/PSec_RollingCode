@@ -41,9 +41,12 @@ boolean update_counter(uint32_t newCounter) {
     return true;
 }
 
-void reset_storage(){
+void store_counter(uint32_t newCounter) {
     authData.begin(AUTHDATA_NAMESPACE, false);
-    authData.putUInt(COUNTER_KEY, 0);
-    log_i("Default Data written");
-    authData.end(); 
+
+    authData.putUInt(COUNTER_KEY, newCounter);
+    log_i("Counter stored in flash. New counter value: %u", newCounter);
+
+    // Close the storage session normally
+    authData.end();
 }

@@ -48,9 +48,18 @@ void initialize_storage();
 boolean update_counter(uint32_t newCounter);
 
 /**
- * @brief Rewrites all used namespaces and keys with default data
+ * @brief Commits a fresh rolling counter value directly to the non-volatile storage (NVS).
  * 
+ * This function bypasses security and sequence validation to immediately overwrite 
+ * the persistent counter tracking. It opens a write-enabled session within the 
+ * designated namespace, flashes the new 32-bit unsigned integer to the storage hardware, 
+ * issues a confirmation log, and safely closes the flash interface session.
+ * 
+ * @note Primarily used by the transmitting device (KeyFob) to permanently remember its own 
+ *       incremented state, or during initial provisioning.
+ * 
+ * @param newCounter The raw 32-bit rolling code value to be saved into flash memory.
  */
-void reset_storage();
+void store_counter(uint32_t newCounter);
 
 #endif // PREFERENCES_HELPER_HPP
