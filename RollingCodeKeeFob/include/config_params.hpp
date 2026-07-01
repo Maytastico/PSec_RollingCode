@@ -14,6 +14,11 @@ const uint16_t SERIAL_NUMBER_SIZE = 12;
 const uint8_t BTN_PIN_OPEN = 37;
 const uint8_t BTN_PIN_CLOSE = 38;
 
+// Workshop-Zusatzaufgaben: je ein Button pro Demo-Protokoll
+const uint8_t BUTTON_PIN_TASK1 = 39; // Tristate/Princeton (Flipper-lesbar)
+const uint8_t BUTTON_PIN_TASK2 = 40; // NRZ mit manueller 32-Byte-Praeambel
+const uint8_t BUTTON_PIN_TASK3 = 41; // AES-Rolling-Code Replay-Burst (AM270/NRZ)
+
 // Eindeutige Seriennummer für deinen KeyFob (12 Bytes)
 const unsigned char SERIAL_NUMBER[SERIAL_NUMBER_SIZE] = {
   0x4A, 0x9F, 0x2C, 0x8E, 0x11, 0xD3, 0x77, 0xA6,
