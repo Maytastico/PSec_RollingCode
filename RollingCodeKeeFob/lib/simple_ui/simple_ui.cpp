@@ -1,11 +1,6 @@
 #include "simple_ui.hpp"
 
-UserInterface::UserInterface(uint8_t buttonPin) {
-    _btnPin = buttonPin;
-    _lastButtonState = HIGH;
-    _buttonPressedTriggered = false;
-    _lastDebounceTime = 0;
-    
+UserInterface::UserInterface() {
     _isBlinking = false;
     _lastToggleTime = 0;
     _blinkInterval = 0;
@@ -14,7 +9,6 @@ UserInterface::UserInterface(uint8_t buttonPin) {
 }
 
 void UserInterface::begin() {
-    pinMode(_btnPin, INPUT);
     
     // RGB-LED beim Start einmal ausschalten
     ledOff(); 
@@ -22,23 +16,6 @@ void UserInterface::begin() {
 
 void UserInterface::update() {
     unsigned long currentMillis = millis();
-
-    // --- 1. BUTTON DEBOUNCE & ACTIVE-HIGH LOGIC ---
-    bool reading = digitalRead(_btnPin);
-
-    // Wenn sich der physikalische Zustand geändert hat, Entprell-Timer zurücksetzen
-    if (reading != _lastButtonState) {
-        _lastDebounceTime = currentMillis;
-    }
-
-    if ((currentMillis - _lastDebounceTime) > _debounceDelay) {
-        // FIX: Für Active-High prüfen wir auf "HIGH" beim Tastendruck!
-        if (reading == HIGH && !_buttonPressedTriggered) { 
-            // Taste wurde gerade frisch gedrückt (Flankenwechsel LOW -> HIGH)
-            _buttonPressedTriggered = true; 
-        }
-    }
-    _lastButtonState = reading;
 
     // --- 2. ASYNCHRONES RGB BLINKEN ---
     if (_isBlinking && (currentMillis - _lastToggleTime >= _blinkInterval)) {
@@ -61,13 +38,7 @@ void UserInterface::update() {
     }
 }
 
-bool UserInterface::isButtonPressed() {
-    if (_buttonPressedTriggered) {
-        _buttonPressedTriggered = false;
-        return true;
-    }
-    return false;
-}
+
 
 void UserInterface::setLedColor(uint8_t r, uint8_t g, uint8_t b) {
     _isBlinking = false; // Laufende Blink-Muster stoppen

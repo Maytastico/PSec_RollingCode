@@ -11,8 +11,8 @@
 
 const uint16_t SERIAL_NUMBER_SIZE = 12;
 
-const uint8_t BTN_PIN_OPEN = 37;
-const uint8_t BTN_PIN_CLOSE = 38;
+const uint8_t BTN_TASK1 = 39;
+const uint8_t BTN_TASK2 = 38;
 
 // Eindeutige Seriennummer für deinen KeyFob (12 Bytes)
 const unsigned char SERIAL_NUMBER[SERIAL_NUMBER_SIZE] = {

@@ -5,14 +5,6 @@
 
 class UserInterface {
 private:
-    uint8_t _btnPin;
-
-    // Variablen für das Button-Entprellen
-    bool _lastButtonState;
-    bool _buttonPressedTriggered;
-    unsigned long _lastDebounceTime;
-    const unsigned long _debounceDelay = 50;
-
     // Variablen für RGB-Effekte ohne blockierendes delay()
     bool _isBlinking;
     unsigned long _lastToggleTime;
@@ -26,10 +18,9 @@ private:
     bool _ledState;
 
 public:
-    UserInterface(uint8_t buttonPin);
+    UserInterface();
     void begin();
     void update();
-    bool isButtonPressed();
 
     /**
      * @brief Setzt die RGB-LED auf eine feste Farbe.

@@ -24,7 +24,7 @@ void initialize_storage() {
 boolean update_counter(uint32_t newCounter) {
     authData.begin(AUTHDATA_NAMESPACE, false);
 
-    if (newCounter <= counter) {
+    if (newCounter <= counter && newCounter <= counter + 256) {
         log_e("SECURITY ALERT: Received counter is outdated or replayed! Storage NOT updated. Current: %u, Received: %u", counter, newCounter);
         
         authData.end(); 
